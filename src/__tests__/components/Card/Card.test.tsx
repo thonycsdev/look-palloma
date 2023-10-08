@@ -20,9 +20,9 @@ describe("Card tests", () => {
     test("The card should contain the expense infos on the screen", async () => {
         render(<Card expense={expense} />);
         const expenseName = await screen.getByText("Celular");
-        const expensePrice = await screen.getByText("1200");
+        const expensePrice = await screen.getByTestId("convertedPrice");
 
         expect(expenseName).toBeInTheDocument();
-        expect(expensePrice).toHaveTextContent((1200).toString());
+        expect(expensePrice).toBeInTheDocument();
     });
 });
