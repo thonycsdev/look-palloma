@@ -6,11 +6,11 @@ function NavBar() {
         <>
             <div className="w-screen h-16 bg-green-400 flex items-center justify-between px-8">
                 <Link href={"/"}>
-                    <div>Look Palloma</div>
+                    <div className="font-extralight text-xl">Look Palloma</div>
                 </Link>
                 <div className="pr-6">
                     <Link href={"/expense"}>
-                        <div>Despesa</div>
+                        <div className="font-medium">Despesa</div>
                     </Link>
                 </div>
             </div>
