@@ -8,6 +8,7 @@ function Filter({ onInputChange }: FilterProps) {
     return (
         <>
             <input
+                className="rounded-md "
                 type="text"
                 placeholder="Search Here"
                 aria-label="search-input"
