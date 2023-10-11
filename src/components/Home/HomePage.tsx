@@ -4,12 +4,17 @@ import Filter from "../Filter/Filter";
 import { Expense } from "@/models/Expense";
 
 function HomePage({ expenses }: { expenses: Expense[] }) {
-    const [filtered, setExpensesFiltered] = useState<Expense[]>(expenses);
-    console.log(setExpensesFiltered);
+    const [filtered, setFiltered] = useState<Expense[]>(expenses);
 
+    const onFilterChanged = (searchTerm: string) => {
+        const filteredExpenses = expenses.filter((expense) =>
+            expense.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFiltered(filteredExpenses);
+    };
     return (
         <div className="h-full w-full flex flex-col items-center pt-11">
-            <Filter />
+            <Filter onInputChange={onFilterChanged} />
             <Cards expenses={filtered} />
         </div>
     );
