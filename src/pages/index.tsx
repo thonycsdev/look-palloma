@@ -8,16 +8,13 @@ export default function Home() {
     const expenses = getExpenses();
     return (
         <>
-            <div className="w-screen h-screen bg-slate-100">
-                <HomePage expenses={expenses} />
-            </div>
+            <HomePage expenses={expenses} />
         </>
     );
 }
 
 export async function getStaticProps() {
-    const data = await getExpenses();
-    console.log(data);
+    // const data = await getExpenses();
     return {
         props: {},
     };

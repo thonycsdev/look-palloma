@@ -7,16 +7,14 @@ type FilterProps = {
 function Filter({ onInputChange }: FilterProps) {
     return (
         <>
-            <div>
-                <input
-                    type="text"
-                    placeholder="Search Here"
-                    aria-label="search-input"
-                    onChange={(e) => {
-                        onInputChange(e.target.value);
-                    }}
-                />
-            </div>
+            <input
+                type="text"
+                placeholder="Search Here"
+                aria-label="search-input"
+                onChange={(e) => {
+                    onInputChange(e.target.value);
+                }}
+            />
         </>
     );
 }
