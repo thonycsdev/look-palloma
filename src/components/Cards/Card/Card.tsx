@@ -13,7 +13,10 @@ function Card({ expense }: CardProps) {
         "pt-BR"
     );
     return (
-        <div className="w-60 h-48 bg-green-300 flex flex-col items-center rounded-b-3xl rounded-lg transform duration-150 hover:scale-110 hover:shadow-2xl shadow-md">
+        <div
+            role="card"
+            className="w-60 h-48 bg-green-300 flex flex-col items-center rounded-b-3xl rounded-lg transform duration-150 hover:scale-110 hover:shadow-2xl shadow-md"
+        >
             <div className="h-4/5 flex flex-col items-center gap-4 pb-3">
                 <div className="flex-1 flex items-center">{expense.name}</div>
                 <div data-testid="convertedPrice">{convertedPrice}</div>

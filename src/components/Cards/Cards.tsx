@@ -8,7 +8,10 @@ type CardProps = {
 function Cards({ expenses }: CardProps) {
     return (
         <>
-            <div className="flex justify-center gap-14 p-7 flex-wrap">
+            <div
+                role="cards"
+                className="flex justify-center gap-14 p-7 flex-wrap"
+            >
                 {expenses.map((expense) => (
                     <Card expense={expense} key={expense.id} />
                 ))}
