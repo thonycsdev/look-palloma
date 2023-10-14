@@ -1,5 +1,9 @@
+"use client";
+
 import { convertPriceToLocaleCurrencyString } from "@/functions/convertPriceToLocaleCurrencyString";
+
 import { Expense } from "@/models/Expense";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 type CardProps = {
@@ -7,6 +11,7 @@ type CardProps = {
 };
 
 function Card({ expense }: CardProps) {
+    const router = useRouter();
     const convertedPrice = convertPriceToLocaleCurrencyString(
         expense.price,
         "BRL",
@@ -22,7 +27,10 @@ function Card({ expense }: CardProps) {
                 <div data-testid="convertedPrice">{convertedPrice}</div>
                 <div>{expense.date.toLocaleDateString()}</div>
             </div>
-            <div className=" bg-green-200 rounded-b-3xl w-full h-1/5 flex justify-center items-center transform duration-150 hover:text-lg">
+            <div
+                onClick={() => router.push("/expense/2")}
+                className=" bg-green-200 rounded-b-3xl w-full h-1/5 flex justify-center items-center transform duration-150 hover:text-lg"
+            >
                 Ver Despesa
             </div>
         </div>

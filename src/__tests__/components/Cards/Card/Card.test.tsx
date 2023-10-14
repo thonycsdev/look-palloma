@@ -2,6 +2,7 @@ import Card from "@/components/Cards/Card/Card";
 import "@testing-library/jest-dom";
 import { Expense } from "@/models/Expense";
 import { render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 
 describe("Card tests", () => {
     const expense: Expense = {
@@ -17,6 +18,7 @@ describe("Card tests", () => {
         },
     };
 
+    userEvent.setup();
     test("The card should contain the expense infos on the screen", async () => {
         render(<Card expense={expense} />);
         const expenseName = await screen.getByText("Celular");

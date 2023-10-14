@@ -1,6 +1,7 @@
 import Cards from "@/components/Cards/Cards";
 import { render, screen } from "@testing-library/react";
 import { getExpenses } from "../../../../__mockData__/expensesUsers";
+jest.mock("next/navigation");
 
 describe("Cards", () => {
     test("Should render the same amount of expenses as cards", async () => {
