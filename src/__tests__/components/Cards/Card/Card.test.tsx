@@ -17,12 +17,14 @@ describe("Card tests", () => {
             email: "a@a.com",
         },
     };
+    const pushMock = jest.fn();
+    jest.mock("next/router", () => ({ push: pushMock }));
 
     userEvent.setup();
     test("The card should contain the expense infos on the screen", async () => {
         render(<Card expense={expense} />);
-        const expenseName = await screen.getByText("Celular");
-        const expensePrice = await screen.getByTestId("convertedPrice");
+        const expenseName = screen.getByText("Celular");
+        const expensePrice = screen.getByTestId("convertedPrice");
 
         expect(expenseName).toBeInTheDocument();
         expect(expensePrice).toBeInTheDocument();

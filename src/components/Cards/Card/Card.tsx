@@ -28,7 +28,8 @@ function Card({ expense }: CardProps) {
                 <div>{expense.date.toLocaleDateString()}</div>
             </div>
             <div
-                onClick={() => router.push("/expense/2")}
+                role="card-push"
+                onClick={() => router.push("/expense/" + expense.id)}
                 className=" bg-green-200 rounded-b-3xl w-full h-1/5 flex justify-center items-center transform duration-150 hover:text-lg"
             >
                 Ver Despesa
