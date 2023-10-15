@@ -20,7 +20,7 @@ const expenses: Expense[] = [
         name: "Groceries",
         price: 50.0,
         date: new Date("2023-10-05"),
-        createdAt: "2023-10-05T14:30:00",
+        createdAt: new Date(),
         user: users[0], // Assign a user object from the 'users' array
     },
     {
@@ -28,7 +28,7 @@ const expenses: Expense[] = [
         name: "Gasoline",
         price: 30.0,
         date: new Date("2023-10-06"),
-        createdAt: "2023-10-06T09:15:00",
+        createdAt: new Date(),
         user: users[1], // Assign a different user object
     },
     {
@@ -36,7 +36,7 @@ const expenses: Expense[] = [
         name: "Groceries",
         price: 50.0,
         date: new Date("2023-10-05"),
-        createdAt: "2023-10-05T14:30:00",
+        createdAt: new Date(),
         user: users[0], // Assign a user object from the 'users' array
     },
     {
@@ -44,7 +44,7 @@ const expenses: Expense[] = [
         name: "Groceries",
         price: 50.0,
         date: new Date("2023-10-05"),
-        createdAt: "2023-10-05T14:30:00",
+        createdAt: new Date(),
         user: users[0], // Assign a user object from the 'users' array
     },
     {
@@ -52,7 +52,7 @@ const expenses: Expense[] = [
         name: "Gasoline",
         price: 30.0,
         date: new Date("2023-10-06"),
-        createdAt: "2023-10-06T09:15:00",
+        createdAt: new Date(),
         user: users[1], // Assign a different user object
     },
     {
@@ -60,7 +60,7 @@ const expenses: Expense[] = [
         name: "Groceries",
         price: 50.0,
         date: new Date("2023-10-05"),
-        createdAt: "2023-10-05T14:30:00",
+        createdAt: new Date(),
         user: users[0], // Assign a user object from the 'users' array
     },
     {
@@ -68,7 +68,7 @@ const expenses: Expense[] = [
         name: "Groceries",
         price: 50.0,
         date: new Date("2023-10-05"),
-        createdAt: "2023-10-05T14:30:00",
+        createdAt: new Date(),
         user: users[0], // Assign a user object from the 'users' array
     },
 ];
