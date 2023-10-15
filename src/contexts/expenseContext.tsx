@@ -5,7 +5,7 @@ import { getExpenses } from "../../__mockData__/expensesUsers";
 type ExpenseContextProps = {
     expenses: Expense[];
     setExpenses: (expense: Expense) => void;
-    getSingleExpense: (expenseId: number) => Expense;
+    getSingleExpense: (expenseId: number) => Expense | undefined;
 };
 
 export const ExpenseContext = createContext<ExpenseContextProps>(
@@ -31,7 +31,7 @@ export const ExpenseContextProvider = ({
 
     const getSingleExpense = (expenseId: number) => {
         const expense = expenses.find((e) => e.id === expenseId);
-        return expense!;
+        return expense;
     };
     return (
         <ExpenseContext.Provider

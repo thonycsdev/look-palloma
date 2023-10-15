@@ -3,11 +3,13 @@ import { useRouter } from "next/router";
 import { ExpenseContext } from "@/contexts/expenseContext";
 import Button from "@/components/Buttons/Button";
 
-function ExpenseDetails() {
+export default function ExpenseDetails() {
     const router = useRouter();
-    const { getSingleExpense } = useContext(ExpenseContext);
+
     const expenseId = router.query.expenseId!;
+    const { getSingleExpense } = useContext(ExpenseContext);
     const expense = getSingleExpense(+expenseId);
+    if (!expense) return <h1>Loading...</h1>;
     const formatedDate = expense.date.toLocaleDateString();
     return (
         <>
@@ -44,5 +46,3 @@ function ExpenseDetails() {
         </>
     );
 }
-
-export default ExpenseDetails;

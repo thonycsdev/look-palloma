@@ -1,11 +1,10 @@
 import Button from "@/components/Buttons/Button";
-import { cleanup, logRoles, render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 describe("Button test", () => {
     beforeEach(() => {
-        const { container } = render(<Button>Test</Button>);
-        logRoles(container);
+        render(<Button>Test</Button>);
     });
     test("Should render the children of the button", async () => {
         const button = await screen.findByText("Test");
