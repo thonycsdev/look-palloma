@@ -31,8 +31,7 @@ export const ExpenseContextProvider = ({
 
     const getSingleExpense = (expenseId: number) => {
         const expense = expenses.find((e) => e.id === expenseId);
-        if (!expense) throw new Error("Expense not found");
-        return expense;
+        return expense!;
     };
     return (
         <ExpenseContext.Provider

@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { ExpenseContext } from "@/contexts/expenseContext";
 import Button from "@/components/Buttons/Button";
 
 function ExpenseDetails() {
-    const params = useParams();
+    const router = useRouter();
     const { getSingleExpense } = useContext(ExpenseContext);
-    const expense = getSingleExpense(+params.expenseId);
+    const expenseId = router.query.expenseId!;
+    const expense = getSingleExpense(+expenseId);
     const formatedDate = expense.date.toLocaleDateString();
     return (
         <>

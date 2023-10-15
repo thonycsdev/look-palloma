@@ -2,12 +2,15 @@ import { ExpenseContext } from "@/contexts/expenseContext";
 import { Expense } from "@/models/Expense";
 import ExpenseDetails from "@/pages/expense/[expenseId]";
 import { render, screen } from "@testing-library/react";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 
-jest.mock("next/navigation", () => {
+jest.mock("next/router", () => {
     return {
-        useParams: jest.fn().mockReturnValue({ expenseId: 1 } as Params),
+        useRouter: jest.fn().mockReturnValue({
+            query: {
+                expenseId: "1",
+            },
+        }),
     };
 });
 
@@ -40,7 +43,7 @@ describe("Index Expense Details", () => {
         );
     });
     test("Should call the functions to get the expense", async () => {
-        expect(useParams).toBeCalled();
+        expect(useRouter).toBeCalled();
         expect(getSingleExpense).toBeCalled();
         const inputs = await screen.findAllByRole("textbox");
         expect(inputs).toHaveLength(3);
