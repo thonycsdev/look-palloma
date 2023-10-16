@@ -47,7 +47,7 @@ describe("Index Expense Details", () => {
         expect(useRouter).toBeCalled();
         expect(getSingleExpense).toBeCalled();
         const inputs = await screen.findAllByRole("textbox");
-        expect(inputs).toHaveLength(3);
+        expect(inputs).toHaveLength(2);
     });
 
     test("Should render expense name and have its default value", async () => {
@@ -65,23 +65,25 @@ describe("Index Expense Details", () => {
         expect(expensePrice).toHaveValue(testValue.price.toString());
     });
     test("Should render expense date and have its default value", async () => {
-        const expenseDate = await screen.findByRole("textbox", {
-            name: "Made in:",
-        });
+        const expenseDate = (await screen.findByTestId(
+            "expense-date"
+        )) as HTMLInputElement;
         expect(expenseDate).toBeInTheDocument();
 
-        expect(expenseDate).toHaveValue(
-            testValue.createdAt.toLocaleDateString()
+        expect(new Date(expenseDate.defaultValue).toDateString()).toBe(
+            testValue.date.toDateString()
         );
     });
 
     test("User should change the default information date", async () => {
-        const expenseDate = await screen.findByRole("textbox", {
-            name: "Made in:",
-        });
+        const expenseDate = (await screen.findByTestId(
+            "expense-date"
+        )) as HTMLInputElement;
         await userEvent.clear(expenseDate);
-        await userEvent.type(expenseDate, "15/11/1998");
-        expect(expenseDate).toHaveValue("15/11/1998");
+        await userEvent.click(expenseDate);
+        await userEvent.type(expenseDate, "1998-11-15");
+
+        expect(expenseDate).toHaveValue("1998-11-15");
     });
     test("User should change the default information price", async () => {
         const expensePrice = await screen.findByRole("textbox", {
