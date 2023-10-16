@@ -2,6 +2,7 @@ import { ExpenseContext } from "@/contexts/expenseContext";
 import { Expense } from "@/models/Expense";
 import ExpenseDetails from "@/pages/expense/[expenseId]";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/router";
 
 jest.mock("next/router", () => {
@@ -72,6 +73,31 @@ describe("Index Expense Details", () => {
         expect(expenseDate).toHaveValue(
             testValue.createdAt.toLocaleDateString()
         );
+    });
+
+    test("User should change the default information date", async () => {
+        const expenseDate = await screen.findByRole("textbox", {
+            name: "Made in:",
+        });
+        await userEvent.clear(expenseDate);
+        await userEvent.type(expenseDate, "15/11/1998");
+        expect(expenseDate).toHaveValue("15/11/1998");
+    });
+    test("User should change the default information price", async () => {
+        const expensePrice = await screen.findByRole("textbox", {
+            name: "Price:",
+        });
+        await userEvent.clear(expensePrice);
+        await userEvent.type(expensePrice, "1");
+        expect(expensePrice).toHaveValue("1");
+    });
+    test("User should change the default information name", async () => {
+        const expenseName = await screen.findByRole("textbox", {
+            name: "Expense:",
+        });
+        await userEvent.clear(expenseName);
+        await userEvent.type(expenseName, "a1");
+        expect(expenseName).toHaveValue("a1");
     });
 
     test("Should update the expense details", async () => {
