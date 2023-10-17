@@ -1,4 +1,5 @@
 import { ExpenseContext } from "@/contexts/expenseContext";
+import parseDateToYYYYMMDD from "@/functions/parseDateToYYYYMMDD";
 import { Expense } from "@/models/Expense";
 import ExpenseDetails from "@/pages/expense/[expenseId]";
 import { render, screen } from "@testing-library/react";
@@ -19,7 +20,7 @@ const testValue: Expense = {
     id: 1,
     name: "test",
     price: 100,
-    date: new Date(),
+    date: new Date("1998/11/15"),
     user: {
         id: 1,
         name: "test",
@@ -30,10 +31,12 @@ const testValue: Expense = {
 const getSingleExpense = jest.fn().mockReturnValue(testValue);
 
 describe("Index Expense Details", () => {
+    const updateExpense = jest.fn();
     beforeEach(() => {
         render(
             <ExpenseContext.Provider
                 value={{
+                    updateExpense,
                     getSingleExpense: getSingleExpense,
                     expenses: [],
                     setExpenses: jest.fn(),
@@ -70,8 +73,8 @@ describe("Index Expense Details", () => {
         )) as HTMLInputElement;
         expect(expenseDate).toBeInTheDocument();
 
-        expect(new Date(expenseDate.defaultValue).toDateString()).toBe(
-            testValue.date.toDateString()
+        expect(expenseDate.defaultValue).toBe(
+            parseDateToYYYYMMDD(testValue.date)
         );
     });
 
@@ -102,7 +105,7 @@ describe("Index Expense Details", () => {
         expect(expenseName).toHaveValue("a1");
     });
 
-    test("Should update the expense details", async () => {
+    test("Buttons should be in the document", async () => {
         const buttons = await screen.findAllByRole("button");
         const update = await screen.findByRole("button", {
             name: /update expense/i,
@@ -114,5 +117,13 @@ describe("Index Expense Details", () => {
         expect(buttons).toHaveLength(2);
         expect(update).toBeInTheDocument();
         expect(deleteButton).toBeInTheDocument();
+    });
+
+    test("OnClick update should call updateHandler from context", async () => {
+        const update = await screen.findByRole("button", {
+            name: /update expense/i,
+        });
+        await userEvent.click(update);
+        expect(updateExpense).toBeCalled();
     });
 });

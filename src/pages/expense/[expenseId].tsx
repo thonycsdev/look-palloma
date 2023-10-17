@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "@/components/Buttons/Button";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import useURL from "@/hooks/useURL";
+import { ExpenseContext } from "@/contexts/expenseContext";
+import parseDateToYYYYMMDD from "@/functions/parseDateToYYYYMMDD";
+import { Expense } from "@/models/Expense";
 
 export default function ExpenseDetails() {
     const { expense } = useURL();
+    const { updateExpense } = useContext(ExpenseContext);
     const { handleSubmit, register } = useForm();
     if (!expense) return <h1>Loading...</h1>;
 
-    const handleUpdate: SubmitHandler<FieldValues> = (data) => {
-        console.log(data);
+    const handleUpdate: SubmitHandler<Partial<Expense>> = (data) => {
+        const payload = {
+            ...data,
+            date: new Date(data.date!),
+            price: +data.price!,
+        };
+        updateExpense(payload, expense.id);
     };
     return (
         <>
@@ -37,8 +46,8 @@ export default function ExpenseDetails() {
                             type="date"
                             data-testid="expense-date"
                             id="expense-date"
+                            defaultValue={parseDateToYYYYMMDD(expense?.date)}
                             {...register("date")}
-                            defaultValue={expense?.date.toLocaleDateString()}
                         />
                     </div>
                     <div className="flex gap-10">
