@@ -7,6 +7,7 @@ type ExpenseContextProps = {
     setExpenses: (expense: Expense) => void;
     getSingleExpense: (expenseId: number) => Expense | undefined;
     updateExpense: (expense: Partial<Expense>, id: number) => void;
+    createExpense: (expense: Expense) => void;
 };
 
 export const ExpenseContext = createContext<ExpenseContextProps>(
@@ -46,9 +47,14 @@ export const ExpenseContextProvider = ({
             price: expense.price!,
         };
     };
+
+    const createExpense = (expense: Expense) => {
+        setExpenses((old) => [...old, { ...expense }]);
+    };
     return (
         <ExpenseContext.Provider
             value={{
+                createExpense,
                 updateExpense,
                 expenses: expenses,
                 setExpenses: addExpense,
