@@ -25,7 +25,7 @@ function Card({ expense }: CardProps) {
             <div className="h-4/5 flex flex-col items-center gap-4 pb-3">
                 <div className="flex-1 flex items-center">{expense.name}</div>
                 <div data-testid="convertedPrice">{convertedPrice}</div>
-                <div>{expense.date.toLocaleDateString()}</div>
+                <div>{new Date(expense.date).toLocaleDateString()}</div>
             </div>
             <div
                 role="card-push"

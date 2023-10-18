@@ -11,6 +11,8 @@ import React from "react";
 import Button from "../Buttons/Button";
 import { useForm } from "react-hook-form";
 import parseDateToYYYYMMDD from "@/functions/parseDateToYYYYMMDD";
+import { Expense } from "@prisma/client";
+import expenseService from "@/services/expenseService";
 
 type CreateExpenseModalProps = {
     isOpen: boolean;
@@ -18,7 +20,18 @@ type CreateExpenseModalProps = {
 };
 
 function CreateExpenseModal({ isOpen, onClose }: CreateExpenseModalProps) {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit } = useForm<Expense>();
+    const handleCreateExpense = async (data: Expense) => {
+        const { createExpense } = expenseService();
+
+        await createExpense({
+            ...data,
+            userId: 1,
+            description: "A",
+            price: +data.price,
+            date: new Date(data.date),
+        });
+    };
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -29,7 +42,7 @@ function CreateExpenseModal({ isOpen, onClose }: CreateExpenseModalProps) {
                     <form
                         className="flex flex-col gap-5"
                         id="expense-form"
-                        onSubmit={handleSubmit((data) => console.log(data))}
+                        onSubmit={handleSubmit(handleCreateExpense)}
                     >
                         <div className="flex flex-col items-start w-full">
                             <label htmlFor="expense-name">Expense name:</label>

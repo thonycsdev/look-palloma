@@ -1,6 +1,6 @@
 import { Expense, PrismaClient } from "@prisma/client";
 
-export class ExpenseService {
+export class ExpenseRepository {
     constructor(private prisma: PrismaClient) {
         this.prisma = prisma;
     }

@@ -2,6 +2,7 @@ import { ExpenseContext } from "@/contexts/expenseContext";
 import ExpensePage from "@/pages/expense";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { getExpenses } from "../../../../__mockData__/expensesUsers";
 
 describe("Index Expense", () => {
     const addExpense = jest.fn();
@@ -24,7 +25,7 @@ describe("Index Expense", () => {
                     updateExpense: jest.fn(),
                 }}
             >
-                <ExpensePage />
+                <ExpensePage expenses={getExpenses()} />
             </ExpenseContext.Provider>
         );
     });
