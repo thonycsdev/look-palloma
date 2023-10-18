@@ -1,13 +1,15 @@
 import HomePage from "@/components/Home/HomePage";
 import React, { useContext, useState } from "react";
-import { getExpenses } from "../../../__mockData__/expensesUsers";
 import Button from "@/components/Buttons/Button";
 import { ExpenseContext } from "@/contexts/expenseContext";
 import CreateExpenseModal from "@/components/Modals/CreateExpenseModal";
 import { Expense } from "@/models/Expense";
 
-function ExpensePage() {
-    const expenses = getExpenses();
+type ExpensePageProps = {
+    expenses: Expense[];
+};
+
+function ExpensePage({ expenses }: ExpensePageProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { createExpense } = useContext(ExpenseContext);
     const handleCreateExpense = () => {
@@ -33,4 +35,11 @@ function ExpensePage() {
     );
 }
 
+export async function getStaticProps() {
+    const response = await fetch("http://localhost:3000/api/expense");
+    const expenses = await response.json();
+    return {
+        props: { expenses },
+    };
+}
 export default ExpensePage;
