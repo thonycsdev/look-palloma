@@ -6,6 +6,7 @@ type ExpenseContextProps = {
     expenses: Expense[];
     setExpenses: (expense: Expense) => void;
     getSingleExpense: (expenseId: number) => Expense | undefined;
+    updateExpense: (expense: Partial<Expense>, id: number) => void;
 };
 
 export const ExpenseContext = createContext<ExpenseContextProps>(
@@ -33,9 +34,22 @@ export const ExpenseContextProvider = ({
         const expense = expenses.find((e) => e.id === expenseId);
         return expense;
     };
+    const updateExpense = (expense: Partial<Expense>, id: number) => {
+        const idx = expenses.findIndex((e) => e.id === id);
+        if (idx < 0) throw new Error(`Expense not found with id ${id}`);
+
+        const expenseToUpdate = expenses[idx];
+        expenses[idx] = {
+            ...expenseToUpdate,
+            date: expense.date!,
+            name: expense.name!,
+            price: expense.price!,
+        };
+    };
     return (
         <ExpenseContext.Provider
             value={{
+                updateExpense,
                 expenses: expenses,
                 setExpenses: addExpense,
                 getSingleExpense,
