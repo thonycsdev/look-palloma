@@ -1,5 +1,5 @@
 import HomePage from "@/components/Home/HomePage";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "@/components/Buttons/Button";
 import { ExpenseContext } from "@/contexts/expenseContext";
 import CreateExpenseModal from "@/components/Modals/CreateExpenseModal";
@@ -10,8 +10,11 @@ type ExpensePageProps = {
 };
 
 function ExpensePage({ expenses }: ExpensePageProps) {
+    const { createExpense, setExpenses } = useContext(ExpenseContext);
     const [isOpen, setIsOpen] = useState(false);
-    const { createExpense } = useContext(ExpenseContext);
+    useEffect(() => {
+        setExpenses(expenses);
+    }, []);
     const handleCreateExpense = () => {
         setIsOpen(true);
         createExpense({} as Expense);
