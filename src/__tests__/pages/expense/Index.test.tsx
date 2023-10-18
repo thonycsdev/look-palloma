@@ -1,10 +1,18 @@
 import { ExpenseContext } from "@/contexts/expenseContext";
 import ExpensePage from "@/pages/expense";
-import { render, screen } from "@testing-library/react";
+import { logRoles, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 describe("Index Expense", () => {
     const addExpense = jest.fn();
+    const onOpen = jest.fn();
+    jest.mock("@chakra-ui/react", () => {
+        return {
+            useDisclosure: {
+                onOpen,
+            },
+        };
+    });
     beforeEach(() => {
         render(
             <ExpenseContext.Provider
@@ -31,5 +39,13 @@ describe("Index Expense", () => {
         });
         await userEvent.click(button);
         expect(addExpense).toBeCalled();
+    });
+    test("Should render the modal when clicked", async () => {
+        const button = await screen.findByRole("button", {
+            name: "Add Expense",
+        });
+        await userEvent.click(button);
+        const modal = await screen.findByText("Create Expense");
+        expect(modal).toBeInTheDocument();
     });
 });

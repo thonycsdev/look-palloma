@@ -36,6 +36,7 @@ describe("Index Expense Details", () => {
         render(
             <ExpenseContext.Provider
                 value={{
+                    createExpense: jest.fn(),
                     updateExpense,
                     getSingleExpense: getSingleExpense,
                     expenses: [],
