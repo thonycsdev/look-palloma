@@ -4,7 +4,7 @@ import axios from "axios";
 function expenseService() {
     async function createExpense(expense: Expense) {
         const result = await axios.post(
-            "http://localhost:3000/api/expense",
+            `${process.env.NEXT_PUBLIC_API_URL}api/expense`,
             expense
         );
         return result.status;
