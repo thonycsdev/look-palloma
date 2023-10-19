@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import Button from "@/components/Buttons/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useURL from "@/hooks/useURL";
-import { ExpenseContext } from "@/contexts/expenseContext";
 import parseDateToYYYYMMDD from "@/functions/parseDateToYYYYMMDD";
 import { Expense } from "@/models/Expense";
 
 export default function ExpenseDetails() {
     const { expense } = useURL();
-    const { updateExpense } = useContext(ExpenseContext);
     const { handleSubmit, register } = useForm();
     if (!expense) return <h1>Loading...</h1>;
 
@@ -18,7 +16,7 @@ export default function ExpenseDetails() {
             date: new Date(data.date!),
             price: +data.price!,
         };
-        updateExpense(payload, expense.id);
+        console.log(payload);
     };
     return (
         <>
@@ -46,7 +44,9 @@ export default function ExpenseDetails() {
                             type="date"
                             data-testid="expense-date"
                             id="expense-date"
-                            defaultValue={parseDateToYYYYMMDD(expense?.date)}
+                            defaultValue={parseDateToYYYYMMDD(
+                                new Date(expense?.date)
+                            )}
                             {...register("date")}
                         />
                     </div>
