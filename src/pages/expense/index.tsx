@@ -41,7 +41,7 @@ function ExpensePage({ expenses }: ExpensePageProps) {
     );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const { expenseService } = expenseServiceFactory();
     const response = await expenseService.getAllExpenses();
     const expenses = serializeDateType(response);
