@@ -4,6 +4,8 @@ import Button from "@/components/Buttons/Button";
 import { ExpenseContext } from "@/contexts/expenseContext";
 import CreateExpenseModal from "@/components/Modals/CreateExpenseModal";
 import { Expense } from "@/models/Expense";
+import expenseServiceFactory from "@/factories/expenseServiceFactory";
+import { serializeDateType } from "@/functions/serializeDateType";
 
 type ExpensePageProps = {
     expenses: Expense[];
@@ -22,6 +24,7 @@ function ExpensePage({ expenses }: ExpensePageProps) {
     const onClose = () => {
         setIsOpen(false);
     };
+    if (!expenses) return null;
     return (
         <>
             <CreateExpenseModal isOpen={isOpen} onClose={onClose} />
@@ -39,8 +42,9 @@ function ExpensePage({ expenses }: ExpensePageProps) {
 }
 
 export async function getStaticProps() {
-    const response = await fetch("http://localhost:3000/api/expense");
-    const expenses = await response.json();
+    const { expenseService } = expenseServiceFactory();
+    const response = await expenseService.getAllExpenses();
+    const expenses = serializeDateType(response);
     return {
         props: { expenses },
     };
