@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "@/components/Buttons/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useURL from "@/hooks/useURL";
 import parseDateToYYYYMMDD from "@/functions/parseDateToYYYYMMDD";
 import { Expense } from "@/models/Expense";
+import { ExpenseContext } from "@/contexts/expenseContext";
 
 export default function ExpenseDetails() {
     const { expense } = useURL();
     const { handleSubmit, register } = useForm();
+    const { removeExpense } = useContext(ExpenseContext);
     if (!expense) return <h1>Loading...</h1>;
 
     const handleUpdate: SubmitHandler<Partial<Expense>> = (data) => {
@@ -17,6 +19,10 @@ export default function ExpenseDetails() {
             price: +data.price!,
         };
         console.log(payload);
+    };
+
+    const handleRemove = (expenseId: number) => {
+        removeExpense(expenseId);
     };
     return (
         <>
@@ -52,7 +58,9 @@ export default function ExpenseDetails() {
                     </div>
                     <div className="flex gap-10">
                         <Button type="submit">Update Expense</Button>
-                        <Button>Delete Expense</Button>
+                        <Button onClick={() => handleRemove(expense.id)}>
+                            Delete Expense
+                        </Button>
                     </div>
                 </div>
             </form>

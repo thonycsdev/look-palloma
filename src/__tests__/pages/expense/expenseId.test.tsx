@@ -31,7 +31,7 @@ const testValue: Expense = {
 const getSingleExpense = jest.fn().mockReturnValue(testValue);
 
 describe("Index Expense Details", () => {
-    const updateExpense = jest.fn();
+    const removeExpense = jest.fn();
     beforeEach(() => {
         render(
             <ExpenseContext.Provider
@@ -40,6 +40,7 @@ describe("Index Expense Details", () => {
                     getSingleExpense: getSingleExpense,
                     expenses: [],
                     setExpenses: jest.fn(),
+                    removeExpense,
                 }}
             >
                 <ExpenseDetails />
@@ -119,11 +120,11 @@ describe("Index Expense Details", () => {
         expect(deleteButton).toBeInTheDocument();
     });
 
-    test.skip("OnClick update should call updateHandler from context", async () => {
-        const update = await screen.findByRole("button", {
-            name: /update expense/i,
+    test("OnClick delte should call delete method from context", async () => {
+        const deleteBtn = await screen.findByRole("button", {
+            name: /delete expense/i,
         });
-        await userEvent.click(update);
-        expect(updateExpense).toBeCalled();
+        await userEvent.click(deleteBtn);
+        expect(removeExpense).toBeCalled();
     });
 });

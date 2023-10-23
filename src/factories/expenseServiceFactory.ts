@@ -1,8 +1,7 @@
-import prisma from "@/repositories/PrismaClient";
-import { ExpenseRepository } from "@/repositories/expenseRepository";
+import expenseService from "@/services/expenseService";
 
 function expenseServiceFactory() {
-    const expenseService = new ExpenseRepository(prisma);
-    return { expenseService };
+    const service = expenseService();
+    return { service };
 }
 export default expenseServiceFactory;

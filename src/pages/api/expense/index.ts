@@ -1,4 +1,4 @@
-import expenseServiceFactory from "@/factories/expenseServiceFactory";
+import { expenseRepositoryFactory } from "@/factories/expenseRepositoryFactory";
 import { Expense } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -6,14 +6,17 @@ export default async function getExpenses(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+    const { repository } = expenseRepositoryFactory();
     if (req.method === "POST") {
         const expense = (await req.body) as Expense;
-        const { expenseService } = expenseServiceFactory();
-        const result = await expenseService.createExpense(expense);
+        const result = await repository.createExpense(expense);
         res.json(result);
         return;
     }
-    const { expenseService } = expenseServiceFactory();
-    const expenses = await expenseService.getAllExpenses();
+    if (req.method === "DELETE") {
+        const { expenseId } = req.body;
+        await repository.deleteExpense(+expenseId!);
+    }
+    const expenses = await repository.getAllExpenses();
     res.json(expenses);
 }
