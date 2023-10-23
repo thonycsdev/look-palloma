@@ -6,6 +6,7 @@ type ExpenseContextProps = {
     setExpenses: Dispatch<Expense[]>;
     getSingleExpense: (expenseId: number) => Expense | undefined;
     createExpense: (expense: Expense) => void;
+    removeExpense: (expenseId: number) => void;
 };
 
 export const ExpenseContext = createContext<ExpenseContextProps>(
@@ -29,6 +30,10 @@ export const ExpenseContextProvider = ({
     const createExpense = (expense: Expense) => {
         setExpenses((old) => [...old, { ...expense }]);
     };
+
+    const removeExpense = (expenseId: number) => {
+        console.log(expenseId);
+    };
     return (
         <ExpenseContext.Provider
             value={{
@@ -36,6 +41,7 @@ export const ExpenseContextProvider = ({
                 setExpenses,
                 expenses: expenses,
                 getSingleExpense,
+                removeExpense,
             }}
         >
             {children}

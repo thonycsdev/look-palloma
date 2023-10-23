@@ -22,7 +22,7 @@ describe("Index Expense", () => {
                     expenses: [],
                     getSingleExpense: jest.fn(),
                     setExpenses: jest.fn(),
-                    updateExpense: jest.fn(),
+                    removeExpense: jest.fn(),
                 }}
             >
                 <ExpensePage expenses={getExpenses()} />
