@@ -5,7 +5,6 @@ import { ExpenseContext } from "@/contexts/expenseContext";
 import CreateExpenseModal from "@/components/Modals/CreateExpenseModal";
 import { Expense } from "@/models/Expense";
 import expenseServiceFactory from "@/factories/expenseServiceFactory";
-import { serializeDateType } from "@/functions/serializeDateType";
 
 type ExpensePageProps = {
     expenses: Expense[];
@@ -42,9 +41,8 @@ function ExpensePage({ expenses }: ExpensePageProps) {
 }
 
 export async function getServerSideProps() {
-    const { expenseService } = expenseServiceFactory();
-    const response = await expenseService.getAllExpenses();
-    const expenses = serializeDateType(response);
+    const { service } = expenseServiceFactory();
+    const expenses = await service.getAllExpenses();
     return {
         props: { expenses },
     };

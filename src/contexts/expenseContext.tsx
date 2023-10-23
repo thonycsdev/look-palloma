@@ -1,3 +1,4 @@
+import expenseServiceFactory from "@/factories/expenseServiceFactory";
 import { Expense } from "@/models/Expense";
 import { Dispatch, createContext, useState } from "react";
 
@@ -21,6 +22,7 @@ export const ExpenseContextProvider = ({
     children,
 }: ExpenseContextProviderProps) => {
     const [expenses, setExpenses] = useState<Expense[]>([]);
+    const { service } = expenseServiceFactory();
 
     const getSingleExpense = (expenseId: number) => {
         const expense = expenses.find((e) => e.id === expenseId);
@@ -31,8 +33,13 @@ export const ExpenseContextProvider = ({
         setExpenses((old) => [...old, { ...expense }]);
     };
 
-    const removeExpense = (expenseId: number) => {
-        console.log(expenseId);
+    const removeExpense = async (expenseId: number) => {
+        try {
+            await service.removeExpense(expenseId);
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error to remove expense");
+        }
     };
     return (
         <ExpenseContext.Provider
