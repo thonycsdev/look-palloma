@@ -14,7 +14,7 @@ export default async function getExpenses(
         return;
     }
     if (req.method === "DELETE") {
-        const { expenseId } = req.query;
+        const { expenseId } = req.body;
         await repository.deleteExpense(+expenseId!);
     }
     const expenses = await repository.getAllExpenses();

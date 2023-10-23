@@ -17,7 +17,9 @@ function expenseService() {
     }
 
     async function removeExpense(expenseId: number) {
-        const result = await axios.delete(`${apiUrl}api/expense/${expenseId}`);
+        const result = await axios.delete(`${apiUrl}api/expense`, {
+            data: { expenseId },
+        });
         return result.status;
     }
 

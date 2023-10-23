@@ -37,7 +37,6 @@ export const ExpenseContextProvider = ({
         try {
             await service.removeExpense(expenseId);
         } catch (error) {
-            console.log(error);
             throw new Error("Error to remove expense");
         }
     };
