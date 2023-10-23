@@ -1,5 +1,6 @@
 import expenseServiceFactory from "@/factories/expenseServiceFactory";
 import { Expense } from "@/models/Expense";
+import { useRouter } from "next/router";
 import { Dispatch, createContext, useState } from "react";
 
 type ExpenseContextProps = {
@@ -23,6 +24,7 @@ export const ExpenseContextProvider = ({
 }: ExpenseContextProviderProps) => {
     const [expenses, setExpenses] = useState<Expense[]>([]);
     const { service } = expenseServiceFactory();
+    const router = useRouter();
 
     const getSingleExpense = (expenseId: number) => {
         const expense = expenses.find((e) => e.id === expenseId);
@@ -36,6 +38,7 @@ export const ExpenseContextProvider = ({
     const removeExpense = async (expenseId: number) => {
         try {
             await service.removeExpense(expenseId);
+            router.replace("/expense");
         } catch (error) {
             throw new Error("Error to remove expense");
         }
