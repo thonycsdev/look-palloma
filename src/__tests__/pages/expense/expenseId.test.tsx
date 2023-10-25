@@ -1,6 +1,6 @@
 import { ExpenseContext } from "@/contexts/expenseContext";
 import parseDateToYYYYMMDD from "@/functions/parseDateToYYYYMMDD";
-import { Expense } from "@/models/Expense";
+import { Expense } from "@prisma/client";
 import ExpenseDetails from "@/pages/expense/[expenseId]";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

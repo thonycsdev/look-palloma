@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "./Card/Card";
-import { Expense } from "@/models/Expense";
+import { Expense } from "@prisma/client";
 
 type CardProps = {
     expenses: Expense[];

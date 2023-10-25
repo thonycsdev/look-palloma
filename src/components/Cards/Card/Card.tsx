@@ -1,8 +1,8 @@
 "use client";
 
 import { convertPriceToLocaleCurrencyString } from "@/functions/convertPriceToLocaleCurrencyString";
+import { Expense } from "@prisma/client";
 
-import { Expense } from "@/models/Expense";
 import { useRouter } from "next/navigation";
 import React from "react";
 

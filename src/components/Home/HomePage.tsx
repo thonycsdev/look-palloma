@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Cards from "../Cards/Cards";
 import Filter from "../Filter/Filter";
-import { Expense } from "@/models/Expense";
+import { Expense } from "@prisma/client";
 
 function HomePage({ expenses }: { expenses: Expense[] }) {
     const [filtered, setFiltered] = useState<Expense[]>(expenses);

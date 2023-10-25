@@ -1,6 +1,6 @@
 import Card from "@/components/Cards/Card/Card";
 import "@testing-library/jest-dom";
-import { Expense } from "@/models/Expense";
+import { Expense } from "@prisma/client";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 

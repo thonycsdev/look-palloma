@@ -1,10 +1,23 @@
 import { ExpenseContext } from "@/contexts/expenseContext";
 import ExpensePage from "@/pages/expense";
+import { Expense } from "@prisma/client";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { getExpenses } from "../../../../__mockData__/expensesUsers";
 
 describe("Index Expense", () => {
+    const mockExpenses = Array.of<Expense>().fill(
+        {
+            id: 0,
+            name: "",
+            price: 0,
+            description: "",
+            date: new Date(),
+            createdAt: new Date(),
+            userId: 0,
+        },
+        10
+    );
+    const getExpenses = jest.fn().mockReturnValue(mockExpenses);
     const addExpense = jest.fn();
     const onOpen = jest.fn();
     jest.mock("@chakra-ui/react", () => {

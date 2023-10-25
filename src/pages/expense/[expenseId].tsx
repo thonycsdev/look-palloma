@@ -3,7 +3,7 @@ import Button from "@/components/Buttons/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useURL from "@/hooks/useURL";
 import parseDateToYYYYMMDD from "@/functions/parseDateToYYYYMMDD";
-import { Expense } from "@/models/Expense";
+import { Expense } from "@prisma/client";
 import { ExpenseContext } from "@/contexts/expenseContext";
 
 export default function ExpenseDetails() {
