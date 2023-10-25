@@ -1,9 +1,11 @@
 import CreateExpenseModal from "@/components/Modals/CreateExpenseModal";
+import { ExpenseContext, ExpenseContextProps } from "@/contexts/expenseContext";
 import parseDateToYYYYMMDD from "@/functions/parseDateToYYYYMMDD";
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 describe("Create Expense Modal", () => {
     const onClose = jest.fn();
+    const createExpense = jest.fn();
     beforeEach(() => {
         render(<CreateExpenseModal isOpen={true} onClose={onClose} />);
     });
@@ -44,5 +46,25 @@ describe("Create Expense Modal", () => {
 
         await userEvent.click(button);
         expect(onClose).toBeCalled();
+    });
+    test("should can createExpense from expense context when clicked", async () => {
+        cleanup();
+        const expenseCtxProps = {} as ExpenseContextProps;
+        render(
+            <ExpenseContext.Provider
+                value={{ ...expenseCtxProps, createExpense }}
+            >
+                <CreateExpenseModal
+                    isOpen={true}
+                    onClose={() => console.log()}
+                />
+            </ExpenseContext.Provider>
+        );
+        const button = await screen.findByRole("button", {
+            name: /create/i,
+        });
+
+        await userEvent.click(button);
+        expect(createExpense).toBeCalled();
     });
 });

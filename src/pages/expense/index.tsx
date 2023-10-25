@@ -3,22 +3,21 @@ import React, { useContext, useEffect, useState } from "react";
 import Button from "@/components/Buttons/Button";
 import { ExpenseContext } from "@/contexts/expenseContext";
 import CreateExpenseModal from "@/components/Modals/CreateExpenseModal";
-import { Expense } from "@/models/Expense";
 import expenseServiceFactory from "@/factories/expenseServiceFactory";
+import { Expense } from "@prisma/client";
 
 type ExpensePageProps = {
     expenses: Expense[];
 };
 
 function ExpensePage({ expenses }: ExpensePageProps) {
-    const { createExpense, setExpenses } = useContext(ExpenseContext);
+    const { setExpenses } = useContext(ExpenseContext);
     const [isOpen, setIsOpen] = useState(false);
     useEffect(() => {
         setExpenses(expenses);
     }, []);
     const handleCreateExpense = () => {
         setIsOpen(true);
-        createExpense({} as Expense);
     };
     const onClose = () => {
         setIsOpen(false);

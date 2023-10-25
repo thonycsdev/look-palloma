@@ -33,14 +33,6 @@ describe("Index Expense", () => {
         const button = await screen.findByText("Add Expense");
         expect(button).toBeInTheDocument();
     });
-
-    test("Should call the add expense handler", async () => {
-        const button = await screen.findByRole("button", {
-            name: "Add Expense",
-        });
-        await userEvent.click(button);
-        expect(addExpense).toBeCalled();
-    });
     test("Should render the modal when clicked", async () => {
         const button = await screen.findByRole("button", {
             name: "Add Expense",

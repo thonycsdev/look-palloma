@@ -1,13 +1,13 @@
 import expenseServiceFactory from "@/factories/expenseServiceFactory";
-import { Expense } from "@/models/Expense";
+import { Expense } from "@prisma/client";
 import { useRouter } from "next/router";
 import { Dispatch, createContext, useState } from "react";
 
-type ExpenseContextProps = {
+export type ExpenseContextProps = {
     expenses: Expense[];
     setExpenses: Dispatch<Expense[]>;
     getSingleExpense: (expenseId: number) => Expense | undefined;
-    createExpense: (expense: Expense) => void;
+    createExpense: (expense: Expense) => Promise<void>;
     removeExpense: (expenseId: number) => Promise<void>;
 };
 
@@ -31,8 +31,14 @@ export const ExpenseContextProvider = ({
         return expense;
     };
 
-    const createExpense = (expense: Expense) => {
-        setExpenses((old) => [...old, { ...expense }]);
+    const createExpense = async (expense: Expense) => {
+        try {
+            await service.createExpense(expense);
+            router.reload();
+        } catch (error) {
+            console.log(error);
+            throw new Error();
+        }
     };
 
     const removeExpense = async (expenseId: number) => {
@@ -40,6 +46,7 @@ export const ExpenseContextProvider = ({
             await service.removeExpense(expenseId);
             router.replace("/expense");
         } catch (error) {
+            console.log(error);
             throw new Error("Error to remove expense");
         }
     };

@@ -7,12 +7,13 @@ import {
     ModalHeader,
     ModalOverlay,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import Button from "../Buttons/Button";
 import { useForm } from "react-hook-form";
 import parseDateToYYYYMMDD from "@/functions/parseDateToYYYYMMDD";
 import { Expense } from "@prisma/client";
-import expenseService from "@/services/expenseService";
+import { ExpenseContext } from "@/contexts/expenseContext";
+import { useLoading } from "@/hooks/useLoading";
 
 type CreateExpenseModalProps = {
     isOpen: boolean;
@@ -20,17 +21,24 @@ type CreateExpenseModalProps = {
 };
 
 function CreateExpenseModal({ isOpen, onClose }: CreateExpenseModalProps) {
+    const { isLoading, handleSwitchLoading } = useLoading();
     const { register, handleSubmit } = useForm<Expense>();
+    const { createExpense } = useContext(ExpenseContext);
     const handleCreateExpense = async (data: Expense) => {
-        const { createExpense } = expenseService();
-
-        await createExpense({
-            ...data,
-            userId: 1,
-            description: "A",
-            price: +data.price,
-            date: new Date(data.date),
-        });
+        try {
+            handleSwitchLoading();
+            await createExpense({
+                ...data,
+                userId: 1,
+                description: "A",
+                price: +data.price,
+                date: new Date(data.date),
+            });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            handleSwitchLoading();
+        }
     };
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -76,6 +84,7 @@ function CreateExpenseModal({ isOpen, onClose }: CreateExpenseModalProps) {
                 </ModalBody>
                 <ModalFooter className="flex gap-5 justify-center">
                     <Button
+                        isLoading={isLoading}
                         form="expense-form"
                         type="submit"
                         className="h-auto py-2 w-24"
