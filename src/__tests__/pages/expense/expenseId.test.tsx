@@ -120,8 +120,8 @@ describe("Index Expense Details", () => {
         expect(deleteButton).toBeInTheDocument();
     });
 
-    test("OnClick delte should call delete method from context", async () => {
-        const deleteBtn = await screen.findByRole("button", {
+    test("OnClick delete should call delete method from context", async () => {
+        const deleteBtn = await screen.getByRole("button", {
             name: /delete expense/i,
         });
         await userEvent.click(deleteBtn);

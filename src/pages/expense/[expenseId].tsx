@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@/components/Buttons/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useURL from "@/hooks/useURL";
@@ -8,6 +8,7 @@ import { ExpenseContext } from "@/contexts/expenseContext";
 
 export default function ExpenseDetails() {
     const { expense } = useURL();
+    const [isLoading, setIsLoading] = useState(false);
     const { handleSubmit, register } = useForm();
     const { removeExpense } = useContext(ExpenseContext);
     if (!expense) return <h1>Loading...</h1>;
@@ -21,8 +22,15 @@ export default function ExpenseDetails() {
         console.log(payload);
     };
 
-    const handleRemove = (expenseId: number) => {
-        removeExpense(expenseId);
+    const handleRemove = async (expenseId: number) => {
+        try {
+            setIsLoading(true);
+            await removeExpense(expenseId);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
     };
     return (
         <>
@@ -58,7 +66,11 @@ export default function ExpenseDetails() {
                     </div>
                     <div className="flex gap-10">
                         <Button type="submit">Update Expense</Button>
-                        <Button onClick={() => handleRemove(expense.id)}>
+                        <Button
+                            isLoading={isLoading}
+                            onClick={() => handleRemove(expense.id)}
+                            disabled={isLoading}
+                        >
                             Delete Expense
                         </Button>
                     </div>

@@ -8,7 +8,7 @@ type ExpenseContextProps = {
     setExpenses: Dispatch<Expense[]>;
     getSingleExpense: (expenseId: number) => Expense | undefined;
     createExpense: (expense: Expense) => void;
-    removeExpense: (expenseId: number) => void;
+    removeExpense: (expenseId: number) => Promise<void>;
 };
 
 export const ExpenseContext = createContext<ExpenseContextProps>(

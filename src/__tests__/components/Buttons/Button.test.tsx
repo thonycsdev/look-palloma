@@ -19,4 +19,19 @@ describe("Button test", () => {
         await userEvent.click(button);
         expect(handle).toHaveBeenCalled();
     });
+    test("Should not render text isLoading is true", async () => {
+        cleanup();
+        render(<Button isLoading={true}>Test</Button>);
+        const loadingComponent = await screen.queryByRole("button", {
+            name: "Test",
+        });
+        expect(loadingComponent).not.toBeInTheDocument();
+    });
+    test("Should render the loading component when isLoading is true", async () => {
+        cleanup();
+        render(<Button isLoading={true}>Test</Button>);
+        const loadingComponent = await screen.queryByRole("button");
+        expect(loadingComponent).toBeInTheDocument();
+        expect(loadingComponent).not.toBeEnabled();
+    });
 });

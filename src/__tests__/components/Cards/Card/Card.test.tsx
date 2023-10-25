@@ -10,7 +10,7 @@ describe("Card tests", () => {
         name: "Celular",
         price: 1200,
         date: new Date(),
-        createdAt: new Date().toLocaleDateString(),
+        createdAt: new Date(),
         user: {
             id: 1,
             name: "Anthony",
