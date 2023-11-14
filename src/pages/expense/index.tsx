@@ -5,6 +5,7 @@ import { ExpenseContext } from "@/contexts/expenseContext";
 import CreateExpenseModal from "@/components/Modals/CreateExpenseModal";
 import { Expense } from "@/models/Expense";
 import expenseServiceFactory from "@/factories/expenseServiceFactory";
+import { getSession } from "next-auth/react";
 
 type ExpensePageProps = {
     expenses: Expense[];
@@ -40,9 +41,18 @@ function ExpensePage({ expenses }: ExpensePageProps) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: { req: any }) {
     const { service } = expenseServiceFactory();
     const expenses = await service.getAllExpenses();
+    const session = await getSession({ req: context.req });
+    if (!session) {
+        return {
+            redirect: {
+                destination: process.env.REDIRECT_NOT_AUTH,
+                permanent: false,
+            },
+        };
+    }
     return {
         props: { expenses },
     };

@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 
 export function userRepository(prisma: PrismaClient) {
     async function createUser(payload: UserPayload) {
-        console.log(payload);
         return await prisma.user.create({
             data: {
                 name: payload.name,
