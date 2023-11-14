@@ -11,10 +11,18 @@ datasource db {
 }
 
 model User {
-    id      Int       @id @default(autoincrement())
-    name    String
-    email   String
-    Expense Expense[]
+    id          Int           @id @default(autoincrement())
+    name        String
+    Expense     Expense[]
+    Credentials Credentials[]
+}
+
+model Credentials {
+    id       Int    @id @default(autoincrement())
+    email    String @unique
+    password String
+    userId   Int
+    user     User   @relation(fields: [userId], references: [id])
 }
 
 model Expense {
