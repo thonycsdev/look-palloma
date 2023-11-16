@@ -1,9 +1,11 @@
+import useLoading from "@/hooks/useLoading";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 
 function LoginForm() {
+    const { changeLoadingState, isLoading } = useLoading();
     const {
         register,
         handleSubmit,
@@ -11,11 +13,19 @@ function LoginForm() {
     } = useForm();
 
     const onSubmit = (data: any) => {
-        signIn("credentials", {
-            redirect: false,
-            email: data.email,
-            password: data.password,
-        });
+        try {
+            changeLoadingState();
+            signIn("credentials", {
+                redirect: true,
+                callbackUrl: "/",
+                email: data.email,
+                password: data.password,
+            });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            changeLoadingState();
+        }
     };
 
     return (
@@ -75,12 +85,16 @@ function LoginForm() {
                             </span>
                         )}
                     </div>
-                    <button
-                        type="submit"
-                        className="bg-emerald-500 text-white py-2 px-4 rounded-lg hover:bg-emerald-400 transition-colors duration-300 max-sm:w-full"
-                    >
-                        Login
-                    </button>
+                    {isLoading ? (
+                        <p>Loading...</p>
+                    ) : (
+                        <button
+                            type="submit"
+                            className="bg-emerald-500 text-white py-2 px-4 rounded-lg hover:bg-emerald-400 transition-colors duration-300 max-sm:w-full"
+                        >
+                            Login
+                        </button>
+                    )}
                 </form>
                 <div className="mt-4">
                     <p>
