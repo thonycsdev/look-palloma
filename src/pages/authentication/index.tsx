@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-function index() {
+function LoginForm() {
     const {
         register,
         handleSubmit,
@@ -13,7 +13,7 @@ function index() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex flex-col items-center justify-center w-4/5">
             <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl w-full">
                 <h2 className="text-2xl font-bold mb-4">Login</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -72,7 +72,7 @@ function index() {
                     </div>
                     <button
                         type="submit"
-                        className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+                        className="bg-emerald-500 text-white py-2 px-4 rounded-lg hover:bg-emerald-400 transition-colors duration-300 max-sm:w-full"
                     >
                         Login
                     </button>
@@ -82,4 +82,4 @@ function index() {
     );
 }
 
-export default index;
+export default LoginForm;
