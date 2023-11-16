@@ -1,5 +1,5 @@
 import useLoading from "@/hooks/useLoading";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -110,6 +110,20 @@ function LoginForm() {
             </div>
         </div>
     );
+}
+export async function getServerSideProps(context: { req: any }) {
+    const session = await getSession({ req: context.req });
+    if (session) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            },
+        };
+    }
+    return {
+        props: {},
+    };
 }
 
 export default LoginForm;

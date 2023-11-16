@@ -1,6 +1,7 @@
 import { createUserRequest } from "@/functions/requests";
 import { UserPayload } from "@/models/User";
 import userService from "@/services/userService";
+import { getSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
 type FormData = {
@@ -163,4 +164,19 @@ export default function SignUp() {
             </div>
         </div>
     );
+}
+
+export async function getServerSideProps(context: { req: any }) {
+    const session = await getSession({ req: context.req });
+    if (session) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            },
+        };
+    }
+    return {
+        props: {},
+    };
 }
