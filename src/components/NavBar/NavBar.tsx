@@ -1,7 +1,6 @@
-import { stat } from "fs";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 
 function NavBar() {
     const { status } = useSession();

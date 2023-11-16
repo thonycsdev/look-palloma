@@ -12,7 +12,8 @@ datasource db {
 
 model User {
     id          Int           @id @default(autoincrement())
-    name        String
+    firstName   String
+    lastName    String
     Expense     Expense[]
     Credentials Credentials[]
 }

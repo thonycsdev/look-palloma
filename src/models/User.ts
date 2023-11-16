@@ -1,6 +1,7 @@
 export type User = {
     id: number;
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
 };
 
@@ -10,7 +11,8 @@ export type LoginCredentials = {
 };
 
 export type UserPayload = {
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
 };

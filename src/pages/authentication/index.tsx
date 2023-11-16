@@ -1,3 +1,5 @@
+import { signIn } from "next-auth/react";
+import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -9,7 +11,11 @@ function LoginForm() {
     } = useForm();
 
     const onSubmit = (data: any) => {
-        console.log(data);
+        signIn("credentials", {
+            redirect: false,
+            email: data.email,
+            password: data.password,
+        });
     };
 
     return (
@@ -61,7 +67,6 @@ function LoginForm() {
                             }`}
                             {...register("password", {
                                 required: "A password is required",
-                                pattern: /^[0-9]+$/,
                             })}
                         />
                         {errors.password && (
@@ -77,6 +82,17 @@ function LoginForm() {
                         Login
                     </button>
                 </form>
+                <div className="mt-4">
+                    <p>
+                        Don't have an account?{" "}
+                        <Link
+                            href="authentication/sign-up"
+                            className="text-cyan-600 hover:text-cyan-400"
+                        >
+                            Click here
+                        </Link>
+                    </p>
+                </div>
             </div>
         </div>
     );

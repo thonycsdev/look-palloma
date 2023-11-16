@@ -5,7 +5,8 @@ export function userRepository(prisma: PrismaClient) {
     async function createUser(payload: UserPayload) {
         return await prisma.user.create({
             data: {
-                name: payload.name,
+                firstName: payload.firstName,
+                lastName: payload.lastName,
                 Credentials: {
                     create: {
                         email: payload.email,
